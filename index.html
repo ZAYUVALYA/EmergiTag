@@ -1,534 +1,566 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EmergiTag — Emergency QR Health ID</title>
-
-  <!-- SEO -->
-  <meta name="description" content="EmergiTag — create emergency safety QR codes that store vital health info (name, DOB, blood type, allergies, medical history). Generate, download, and use offline-friendly QR tags to help first-responders act fast." />
-  <meta name="keywords" content="EmergiTag, safety qr code, emergency code, emergency qr code, health qr, medical qr, vital qr, emergency tag, first responder, medical id, safety tag" />
-  <link rel="canonical" href="https://zayuvalya.github.io/EmergiTag/" />
-
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/yourfontawesomekit.js" crossorigin="anonymous"></script>
-  <!-- Replace the above kit string with your kit if you have one;
-       Font Awesome CDN fallback: -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- ScrollReveal -->
-  <script src="https://unpkg.com/scrollreveal"></script>
-
-  <style>
-    :root{
-      --bg: #f6fbfb;
-      --card: #ffffff;
-      --accent: #1fb6a3; /* teal */
-      --accent-2: #ff6b6b; /* emergency red accent */
-      --muted: #6c757d;
-      --glass: rgba(255,255,255,0.6);
-      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    html,body{height:100%;}
-    body{
-      background: linear-gradient(180deg, #f0fcfb 0%, #ffffff 100%);
-      color: #0f1720;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    header{
-      padding: 1.4rem 0;
-    }
-    .brand{
-      font-weight:700;
-      letter-spacing: .2px;
-      color: #0b3b36;
-    }
-    .hero{
-      padding: 2rem 0;
-    }
-    .card-rounded{
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(15,23,34,0.06);
-      border: none;
-    }
-    .form-control:focus{
-      box-shadow: 0 0 0 0.15rem rgba(31,182,163,0.12);
-      border-color: var(--accent);
-    }
-    .badge-item{
-      border-radius: 999px;
-      padding: .45rem .6rem;
-      margin: .15rem;
-      display:inline-flex;
-      align-items:center;
-      gap:.5rem;
-    }
-    .qr-box{
-      display:flex;
-      gap:1rem;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-    }
-    .small-muted{font-size:.9rem;color:var(--muted)}
-    .info-only{
-      min-height: 80vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:2rem;
-    }
-    .hidden { display:none !important; }
-    .pill { border-radius:999px; padding: .35rem .7rem; }
-    /* responsive */
-    @media(min-width:992px){
-      .hero-grid{display:grid;grid-template-columns: 1fr 420px; gap:2rem;align-items:start;}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmergiTag - Emergency Health QR Code for Safety</title>
+    <meta name="description" content="Create emergency health QR codes with your medical information. Free safety QR code solution for emergencies by ZAYUVALYA community.">
+    <meta name="keywords" content="safety QR code, emergency QR code, health emergency tag, medical ID, emergency information, health safety">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2A6B9C;
+            --secondary: #4CAF50;
+            --accent: #FF9800;
+            --light: #F8F9FA;
+            --dark: #343A40;
+            --danger: #DC3545;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1e5a82;
+        }
+        
+        .btn-success {
+            background-color: var(--secondary);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(42, 107, 156, 0.9), rgba(76, 175, 80, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ffffff" fill-opacity="0.1"/><path d="M0 0L100 100" stroke="%23ffffff" stroke-width="1" stroke-opacity="0.1"/><path d="M100 0L0 100" stroke="%23ffffff" stroke-width="1" stroke-opacity="0.1"/></svg>');
+            color: white;
+            padding: 100px 0;
+            border-radius: 0 0 30px 30px;
+        }
+        
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: none;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(42, 107, 156, 0.25);
+        }
+        
+        .tag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .tag {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tag span {
+            margin-right: 5px;
+        }
+        
+        .tag .remove {
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        
+        .qr-container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .emergency-card {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .emergency-info {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .emergency-info strong {
+            color: var(--primary);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-  <header class="container">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <div class="brand fs-4">
-          <i class="fa-solid fa-qrcode" aria-hidden="true"></i>
-          EmergiTag
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>
+                <strong>EmergiTag</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#benefits">Benefits</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="small-muted">Emergency QR ID — by ZAYUVALYA</div>
-      </div>
-      <div class="text-end small-muted">
-        <div>Developed by <strong>Vivaldi Mazza</strong></div>
-        <div>Promoted by <strong>Fitri Handayani</strong></div>
-      </div>
-    </div>
-  </header>
+    </nav>
 
-  <main class="container">
-    <!-- HERO / APP -->
-    <section id="appSection" class="hero">
-      <div class="hero-grid">
-        <!-- LEFT: Form -->
-        <div class="card card-rounded p-4">
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <div>
-              <h3 class="mb-0">Create Emergency QR</h3>
-              <div class="small-muted">Fast. Offline-friendly. Share critical health info.</div>
-            </div>
-            <span class="pill bg-light text-muted"><i class="fa-solid fa-shield-halved"></i> Safety QR</span>
-          </div>
-
-          <form id="emForm" class="mb-3">
-            <div class="row g-2">
-              <div class="col-12">
-                <label class="form-label">Full name</label>
-                <input id="name" class="form-control" type="text" placeholder="Ex: Vivaldi Mazza" required>
-              </div>
-              <div class="col-6">
-                <label class="form-label">Date of Birth</label>
-                <input id="dob" class="form-control" type="date" required>
-              </div>
-              <div class="col-6">
-                <label class="form-label">Blood Type</label>
-                <select id="blood" class="form-select" required>
-                  <option value="">Select</option>
-                  <option>O</option>
-                  <option>A</option>
-                  <option>B</option>
-                  <option>AB</option>
-                </select>
-              </div>
-            </div>
-
-            <hr>
-
-            <!-- Allergy add -->
-            <div class="mb-3">
-              <label class="form-label">Allergies <small class="text-muted">(add one by one)</small></label>
-              <div class="input-group mb-2">
-                <input id="allergyInput" class="form-control" type="text" placeholder="Ex: Pemanis Buatan">
-                <button type="button" id="addAllergyBtn" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i> Add</button>
-              </div>
-              <div id="allergyList" aria-live="polite"></div>
-            </div>
-
-            <!-- History add -->
-            <div class="mb-3">
-              <label class="form-label">Medical history <small class="text-muted">(add conditions)</small></label>
-              <div class="input-group mb-2">
-                <input id="historyInput" class="form-control" type="text" placeholder="Ex: Asma">
-                <button type="button" id="addHistoryBtn" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i> Add</button>
-              </div>
-              <div id="historyList" aria-live="polite"></div>
-            </div>
-
-            <div class="d-flex gap-2 justify-content-between align-items-center">
-              <div>
-                <button type="submit" class="btn btn-success"><i class="fa-solid fa-qrcode"></i> Generate QR</button>
-                <button type="button" id="clearBtn" class="btn btn-outline-secondary">Clear</button>
-              </div>
-              <div class="small-muted text-end">
-                <div>Hash format: <code class="small">N=...;D=...;B=...;A=...;H=...</code></div>
-                <div class="mt-1">QR will point to: <code class="small">/index.html#...</code></div>
-              </div>
-            </div>
-          </form>
-
-          <hr>
-
-          <div class="small-muted">
-            Tips: keep each item short (one or two words). Avoid long paragraphs to ensure QR remains easy to scan.
-          </div>
+    <!-- Hero Section -->
+    <section class="hero text-center" id="home">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Your Health Information in a QR Code</h1>
+            <p class="lead mb-4">Create emergency health QR codes for quick access to critical medical information during emergencies.</p>
+            <a href="#form-section" class="btn btn-light btn-lg">Create Your EmergiTag</a>
         </div>
+    </section>
 
-        <!-- RIGHT: preview / QR -->
-        <aside class="card card-rounded p-4">
-          <div class="qr-box w-100 text-center">
-            <div id="previewCard" class="w-100">
-              <h5 class="mb-1">Preview</h5>
-              <div class="card p-3 card-rounded">
-                <div id="previewSummary" class="text-start small-muted">
-                  <div><strong id="pvName">—</strong></div>
-                  <div><span id="pvDob">—</span> • <span id="pvBlood">—</span></div>
-                  <div class="mt-2"><strong>Allergies:</strong> <span id="pvAll">—</span></div>
-                  <div class="mt-1"><strong>History:</strong> <span id="pvHist">—</span></div>
+    <!-- Emergency Info Display (Hidden by default) -->
+    <section id="emergency-info" class="section" style="display: none;">
+        <div class="container">
+            <div class="card emergency-card">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h2 class="mb-0"><i class="fas fa-heartbeat me-2"></i>Emergency Medical Information</h2>
                 </div>
-              </div>
+                <div class="card-body p-4">
+                    <div class="emergency-info">
+                        <strong><i class="fas fa-user me-2"></i>Name:</strong> <span id="info-name"></span>
+                    </div>
+                    <div class="emergency-info">
+                        <strong><i class="fas fa-birthday-cake me-2"></i>Date of Birth:</strong> <span id="info-dob"></span>
+                    </div>
+                    <div class="emergency-info">
+                        <strong><i class="fas fa-tint me-2"></i>Blood Type:</strong> <span id="info-blood"></span>
+                    </div>
+                    <div class="emergency-info">
+                        <strong><i class="fas fa-allergies me-2"></i>Allergies:</strong> <span id="info-allergies"></span>
+                    </div>
+                    <div class="emergency-info">
+                        <strong><i class="fas fa-history me-2"></i>Medical History:</strong> <span id="info-history"></span>
+                    </div>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <p class="mb-0">This information is provided by EmergiTag for emergency situations</p>
+                </div>
             </div>
-
-            <div id="qrcodeContainer" class="mt-3 text-center hidden">
-              <div id="qrcodeImage" class="mb-2"></div>
-              <div class="d-flex gap-2 justify-content-center">
-                <button id="downloadBtn" class="btn btn-primary"><i class="fa-solid fa-download"></i> Download QR</button>
-                <button id="openLinkBtn" class="btn btn-outline-secondary"><i class="fa-solid fa-up-right-from-square"></i> Open Link</button>
-              </div>
-              <div class="small-muted mt-2" id="shortLinkDisplay"></div>
-            </div>
-
-            <div id="emptyQR" class="mt-3 small-muted">No QR yet. Fill the form then press <strong>Generate QR</strong>.</div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- Info-only section (shown when QR/hash present) -->
-    <section id="infoSection" class="info-only hidden">
-      <div class="container">
-        <div class="card card-rounded p-4">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h4 class="mb-1"><i class="fa-solid fa-user-injured"></i> Emergency Information</h4>
-              <div class="small-muted">Show this to first-responders — no server required.</div>
-            </div>
-            <div class="text-end">
-              <button id="backBtn" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            </div>
-          </div>
-
-          <hr>
-
-          <div id="infoCard" class="row g-3">
-            <div class="col-12 col-md-6">
-              <div class="p-3 card-rounded" style="background:linear-gradient(90deg,#f8fffb,#f1fffe);">
-                <div class="small-muted">Name</div>
-                <div id="infoName" class="h5"></div>
-                <div class="small-muted mt-2">Date of birth</div>
-                <div id="infoDob"></div>
-                <div class="small-muted mt-2">Blood type</div>
-                <div id="infoBlood" class="badge bg-danger text-white rounded-pill px-3 py-2 mt-1"></div>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="p-3 card-rounded" style="background:linear-gradient(90deg,#fff8f8,#fffdf8);">
-                <div class="small-muted">Allergies</div>
-                <div id="infoAll" class="mt-2"></div>
-
-                <div class="small-muted mt-3">Medical history</div>
-                <div id="infoHist" class="mt-2"></div>
-              </div>
-            </div>
-          </div>
-
-          <hr>
-          <div class="small-muted">This page was generated by EmergiTag — a simple offline-friendly emergency QR solution.</div>
         </div>
-      </div>
     </section>
 
-    <!-- About / SEO content -->
-    <section id="about" class="mt-4">
-      <div class="card card-rounded p-4">
-        <h5>About EmergiTag</h5>
-        <p class="small-muted">EmergiTag helps you create safety QR codes that contain essential health information (name, date of birth, blood group, allergies, and medical history). Use them on helmets, car dashboards, wallets, or wearable tags so first-responders can act fast.</p>
+    <!-- Form Section -->
+    <section id="form-section" class="section bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white text-center py-3">
+                            <h2 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Create Your EmergiTag</h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="health-form">
+                                <div class="mb-3">
+                                    <label for="fullName" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="fullName" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="dob" class="form-label">Date of Birth *</label>
+                                    <input type="date" class="form-control" id="dob" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="bloodType" class="form-label">Blood Type *</label>
+                                    <select class="form-select" id="bloodType" required>
+                                        <option value="">Select Blood Type</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Allergies</label>
+                                    <div class="tag-input" id="allergies-container"></div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="allergy-input" placeholder="Add an allergy">
+                                        <button class="btn btn-outline-primary" type="button" id="add-allergy">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Medical History</label>
+                                    <div class="tag-input" id="history-container"></div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="history-input" placeholder="Add medical condition">
+                                        <button class="btn btn-outline-primary" type="button" id="add-history">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-qrcode me-2"></i>Generate QR Code
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <ul>
-          <li>Offline-friendly: QR contains information directly in the hash fragment or text — no login or server required.</li>
-          <li>Designed for speed: compact encoding keeps the QR scannable even with simple smartphone cameras.</li>
-          <li>Privacy-aware: hash fragment is not sent to servers — data is only processed on device.</li>
-        </ul>
+    <!-- QR Code Section -->
+    <section id="qr-section" class="section" style="display: none;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2 class="mb-4">Your EmergiTag QR Code</h2>
+                    <div class="qr-container mb-4">
+                        <div id="qrcode"></div>
+                    </div>
+                    <button id="download-btn" class="btn btn-success btn-lg">
+                        <i class="fas fa-download me-2"></i>Download QR Code
+                    </button>
+                    <p class="mt-4">Print this QR code and place it on your helmet, wallet, or vehicle for emergency access to your medical information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <p class="small-muted">Keywords: <strong>safety qr code</strong>, <strong>emergency code</strong>, <strong>emergency qr code</strong>, <strong>medical qr</strong>, <strong>first responder</strong>.</p>
-      </div>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">How EmergiTag Works</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="step-number mx-auto">1</div>
+                        <h3>Enter Your Information</h3>
+                        <p>Fill out your health details in our secure form. No account needed.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="step-number mx-auto">2</div>
+                        <h3>Generate QR Code</h3>
+                        <p>We create a unique QR code containing your emergency information.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="step-number mx-auto">3</div>
+                        <h3>Place & Protect</h3>
+                        <p>Print and place the QR code on your helmet, ID, or vehicle for emergency access.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="section">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Use EmergiTag?</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Instant Access</h3>
+                        <p>Medical personnel can quickly access your information in emergencies.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>No Database</h3>
+                        <p>Your information is stored in the QR code, not on a server.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3>Privacy First</h3>
+                        <p>You control your information. No login or personal data storage.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Universal Access</h3>
+                        <p>Any smartphone can scan the QR code to view your information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
-    <footer class="mt-4 mb-5 text-center small-muted">
-      <div>EmergiTag — Developed by <strong>Vivaldi Mazza</strong> • Promoted by <strong>Fitri Handayani</strong> • Community: <strong>ZAYUVALYA</strong></div>
-      <div id="copyright" class="mt-2"></div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h4><i class="fas fa-heartbeat me-2"></i>EmergiTag</h4>
+                    <p>Save lives in emergency situations through QR code technology.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h4>About Us</h4>
+                    <p>Developed by Vivaldi Mazza, promoted by Fitri Handayani, and released under the ZAYUVALYA community.</p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>© <span id="current-year"></span> ZAYUVALYA Community. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
-  </main>
 
-  <!-- Scripts -->
-  <script>
-    // ---------- Helper & initial vars ----------
-    const allergyArr = [];
-    const historyArr = [];
-
-    const el = id => document.getElementById(id);
-
-    // Default sample (for placeholder)
-    function updatePreview(){
-      el('pvName').textContent = el('name').value || '—';
-      el('pvDob').textContent = el('dob').value ? (new Date(el('dob').value)).toLocaleDateString() : '—';
-      el('pvBlood').textContent = el('blood').value || '—';
-      el('pvAll').textContent = allergyArr.length ? allergyArr.join(', ') : '—';
-      el('pvHist').textContent = historyArr.length ? historyArr.join(', ') : '—';
-    }
-
-    function renderList(arr, containerId){
-      const container = el(containerId);
-      container.innerHTML = "";
-      arr.forEach((v, i)=>{
-        const span = document.createElement('span');
-        span.className = 'badge bg-light text-truncate badge-item';
-        span.style.display='inline-flex';
-        span.innerHTML = `<span class="me-2 small">${escapeHtml(v)}</span>
-                          <button class="btn btn-link btn-sm text-danger" data-index="${i}" aria-label="remove"><i class="fa-solid fa-xmark"></i></button>`;
-        container.appendChild(span);
-      });
-    }
-
-    // sanitize for innerHTML small labels
-    function escapeHtml(unsafe) {
-      return unsafe.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
-    }
-
-    // ---------- Add item handlers ----------
-    document.addEventListener('click', (e)=>{
-      // remove buttons in lists
-      if(e.target.closest && e.target.closest('button') && e.target.closest('button').dataset && e.target.closest('button').dataset.index !== undefined){
-        const btn = e.target.closest('button');
-        const idx = Number(btn.dataset.index);
-        const parent = btn.parentElement.parentElement;
-        if(parent.id === 'allergyList'){
-          allergyArr.splice(idx,1);
-          renderList(allergyArr,'allergyList');
-        } else if(parent.id === 'historyList'){
-          historyArr.splice(idx,1);
-          renderList(historyArr,'historyList');
-        }
-        updatePreview();
-      }
-    });
-
-    el('addAllergyBtn').addEventListener('click', ()=>{
-      const v = el('allergyInput').value.trim();
-      if(v && allergyArr.length < 20){
-        allergyArr.push(v);
-        el('allergyInput').value = '';
-        renderList(allergyArr,'allergyList');
-        updatePreview();
-      }
-    });
-
-    el('addHistoryBtn').addEventListener('click', ()=>{
-      const v = el('historyInput').value.trim();
-      if(v && historyArr.length < 50){
-        historyArr.push(v);
-        el('historyInput').value = '';
-        renderList(historyArr,'historyList');
-        updatePreview();
-      }
-    });
-
-    // Enter key on inputs to add
-    el('allergyInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); el('addAllergyBtn').click(); }});
-    el('historyInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); el('addHistoryBtn').click(); }});
-
-    // Clear button
-    el('clearBtn').addEventListener('click', ()=>{
-      el('emForm').reset();
-      allergyArr.length = 0;
-      historyArr.length = 0;
-      renderList(allergyArr,'allergyList');
-      renderList(historyArr,'historyList');
-      el('qrcodeContainer').classList.add('hidden');
-      el('emptyQR').classList.remove('hidden');
-      updatePreview();
-    });
-
-    // ---------- Generate QR ----------
-    el('emForm').addEventListener('submit', (e)=>{
-      e.preventDefault();
-      // Compose compact hash: N=...;D=...;B=...;A=...;H=...
-      const name = (el('name').value || '').trim();
-      const dobRaw = el('dob').value || '';
-      // convert date to ddmmyyyy (compact) or keep ISO? We'll use ddmmyyyy to shorten
-      function toCompactDate(d){
-        if(!d) return '';
-        const dt = new Date(d);
-        const dd = String(dt.getDate()).padStart(2,'0');
-        const mm = String(dt.getMonth()+1).padStart(2,'0');
-        const yy = String(dt.getFullYear());
-        return dd + mm + yy; // e.g., 10062002
-      }
-      const dob = toCompactDate(dobRaw);
-      const blood = (el('blood').value || '').trim();
-
-      // join arrays with commas but remove any semicolons/equals to prevent format break
-      const sanitize = s => s.replaceAll(';',' ').replaceAll('=',' ').trim();
-      const a = allergyArr.map(sanitize).join(',');
-      const h = historyArr.map(sanitize).join(',');
-
-      // encodeURIComponent each value to keep URL-safe and shorten spaces -> we will replace %20 with plus? percent-encoding fine
-      const parts = [
-        `N=${encodeURIComponent(name)}`,
-        `D=${encodeURIComponent(dob)}`,
-        `B=${encodeURIComponent(blood)}`,
-        `A=${encodeURIComponent(a)}`,
-        `H=${encodeURIComponent(h)}`
-      ];
-      const hash = parts.join(';');
-      const base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/') + 'index.html'; // ensure index.html present
-      // But since file likely index.html at root, safer to use fixed path if hosted: use provided link domain
-      const canonicalBase = 'https://zayuvalya.github.io/EmergiTag/index.html';
-      const finalUrl = canonicalBase + '#' + hash;
-
-      // Show link, generate QR via external QR API (qrserver)
-      const qrApi = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&format=png&data=' + encodeURIComponent(finalUrl);
-      // set preview
-      el('qrcodeImage').innerHTML = `<img id="qrImg" src="${qrApi}" alt="EmergiTag QR" style="max-width:100%;border-radius:12px;box-shadow:0 6px 20px rgba(15,23,34,0.08)"/>`;
-      el('qrcodeContainer').classList.remove('hidden');
-      el('emptyQR').classList.add('hidden');
-      el('shortLinkDisplay').innerHTML = `<div class="small-muted">Link: <code class="small text-break">${finalUrl}</code></div>`;
-
-      // set open link button
-      el('openLinkBtn').onclick = ()=> window.open(finalUrl,'_blank');
-
-      // prepare download: fetch image blob and create objectURL
-      fetch(qrApi)
-        .then(r => r.blob())
-        .then(blob => {
-          const blobUrl = URL.createObjectURL(blob);
-          el('downloadBtn').onclick = ()=>{
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            const safeName = (name||'EmergiTag').replaceAll(' ','_');
-            a.download = `${safeName}_EmergiTag_QR.png`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-          };
-        })
-        .catch(err=>{
-          console.warn('Unable to fetch QR image for download',err);
-          el('downloadBtn').onclick = ()=> alert('Unable to download automatically. Right-click the QR image and Save image as...');
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <!-- ScrollReveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Handle allergies and medical history inputs
+        const allergies = [];
+        const medicalHistory = [];
+        
+        document.getElementById('add-allergy').addEventListener('click', function() {
+            const input = document.getElementById('allergy-input');
+            if (input.value.trim() !== '') {
+                allergies.push(input.value.trim());
+                updateTagDisplay('allergies-container', allergies, 'allergy');
+                input.value = '';
+            }
         });
-
-      // fill preview box
-      updatePreview();
-      // scroll into view
-      document.querySelector('#qrcodeContainer').scrollIntoView({behavior:'smooth'});
-    });
-
-    // ---------- Show info when hash present ----------
-    function parseHashToData(hashStr){
-      if(!hashStr) return null;
-      // remove leading #
-      if(hashStr.startsWith('#')) hashStr = hashStr.slice(1);
-      const pieces = hashStr.split(';');
-      const data = {};
-      pieces.forEach(p=>{
-        const eq = p.indexOf('=');
-        if(eq>0){
-          const k = p.slice(0,eq);
-          const v = p.slice(eq+1);
-          try { data[k] = decodeURIComponent(v); } catch(e){ data[k] = v; }
+        
+        document.getElementById('add-history').addEventListener('click', function() {
+            const input = document.getElementById('history-input');
+            if (input.value.trim() !== '') {
+                medicalHistory.push(input.value.trim());
+                updateTagDisplay('history-container', medicalHistory, 'history');
+                input.value = '';
+            }
+        });
+        
+        function updateTagDisplay(containerId, items, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `
+                    <span>${item}</span>
+                    <span class="remove" data-type="${type}" data-index="${index}"><i class="fas fa-times"></i></span>
+                `;
+                container.appendChild(tag);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove').forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemType = this.getAttribute('data-type');
+                    const index = parseInt(this.getAttribute('data-index'));
+                    
+                    if (itemType === 'allergy') {
+                        allergies.splice(index, 1);
+                        updateTagDisplay('allergies-container', allergies, 'allergy');
+                    } else {
+                        medicalHistory.splice(index, 1);
+                        updateTagDisplay('history-container', medicalHistory, 'history');
+                    }
+                });
+            });
         }
-      });
-      return data;
-    }
-
-    function showInfoOnly(data){
-      // hide app & other sections
-      el('appSection').classList.add('hidden');
-      el('about').classList.add('hidden');
-      el('infoSection').classList.remove('hidden');
-
-      // map fields
-      el('infoName').textContent = data.N || '—';
-      // parse D ddmmyyyy -> display nice
-      const d = data.D || '';
-      if(d && d.length===8){
-        const dd = d.slice(0,2), mm = d.slice(2,4), yyyy = d.slice(4,8);
-        el('infoDob').textContent = dd + '-' + mm + '-' + yyyy;
-      } else {
-        el('infoDob').textContent = data.D || '—';
-      }
-      el('infoBlood').textContent = data.B || '—';
-      // arrays
-      el('infoAll').innerHTML = (data.A ? data.A.split(',').map(s=>`<span class="badge bg-light text-dark me-1">${escapeHtml(s)}</span>`).join(' ') : '<span class="text-muted">—</span>');
-      el('infoHist').innerHTML = (data.H ? data.H.split(',').map(s=>`<div class="small-muted">• ${escapeHtml(s)}</div>`).join('') : '<span class="text-muted">—</span>');
-    }
-
-    // Back button from info-only to main app
-    el('backBtn').addEventListener('click', ()=>{
-      // clear hash without reloading
-      history.replaceState("", document.title, window.location.pathname + window.location.search);
-      // show main
-      el('infoSection').classList.add('hidden');
-      el('appSection').classList.remove('hidden');
-      el('about').classList.remove('hidden');
-    });
-
-    // On load: check if hash exists
-    window.addEventListener('load', ()=>{
-      // Fill copyright year dynamically
-      el('copyright').textContent = `© ${new Date().getFullYear()} EmergiTag — ZAYUVALYA`;
-
-      // update preview initially
-      updatePreview();
-
-      // ScrollReveal effects (simple)
-      if(window.ScrollReveal){
-        ScrollReveal().reveal('.card-rounded',{distance:'20px',duration:700,interval:80,origin:'bottom',easing:'ease'});
-      }
-
-      // if there's a hash, parse and show info only
-      const data = parseHashToData(window.location.hash);
-      if(data && Object.keys(data).length){
-        showInfoOnly(data);
-        // hide any other content / make info full focus
-        // scroll to top
-        window.scrollTo(0,0);
-      }
-    });
-
-    // Update preview while typing
-    ['name','dob','blood'].forEach(id=>{
-      el(id).addEventListener('input', updatePreview);
-    });
-
-    // For accessibility: allow drag&drop? Not necessary now.
-
-  </script>
-
-  <!-- Bootstrap JS bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        
+        // Handle form submission
+        document.getElementById('health-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('fullName').value;
+            const dob = document.getElementById('dob').value;
+            const bloodType = document.getElementById('bloodType').value;
+            
+            // Encode data for URL
+            const encodedData = `N=${encodeURIComponent(name)};D=${encodeURIComponent(dob)};B=${encodeURIComponent(bloodType)};A=${encodeURIComponent(allergies.join(','))};H=${encodeURIComponent(medicalHistory.join(','))}`;
+            
+            // Create the URL
+            const baseUrl = 'https://zayuvalya.github.io/EmergiTag/index.html';
+            const fullUrl = `${baseUrl}#${encodedData}`;
+            
+            // Generate QR code
+            document.getElementById('qrcode').innerHTML = '';
+            const qrcode = new QRCode(document.getElementById('qrcode'), {
+                text: fullUrl,
+                width: 200,
+                height: 200
+            });
+            
+            // Show QR code section
+            document.getElementById('qr-section').style.display = 'block';
+            
+            // Scroll to QR code section
+            document.getElementById('qr-section').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Download QR code
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const canvas = document.querySelector('#qrcode canvas');
+            const url = canvas.toDataURL('image/png');
+            
+            const link = document.createElement('a');
+            link.download = 'emergitag-qrcode.png';
+            link.href = url;
+            link.click();
+        });
+        
+        // Check for URL hash on page load
+        window.addEventListener('load', function() {
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const params = hash.split(';');
+                
+                const data = {};
+                params.forEach(param => {
+                    const [key, value] = param.split('=');
+                    data[key] = decodeURIComponent(value);
+                });
+                
+                // Display emergency information
+                document.getElementById('info-name').textContent = data.N || 'Not provided';
+                document.getElementById('info-dob').textContent = data.D || 'Not provided';
+                document.getElementById('info-blood').textContent = data.B || 'Not provided';
+                document.getElementById('info-allergies').textContent = data.A || 'None';
+                document.getElementById('info-history').textContent = data.H || 'None';
+                
+                // Hide form and show emergency info
+                document.getElementById('form-section').style.display = 'none';
+                document.getElementById('qr-section').style.display = 'none';
+                document.getElementById('emergency-info').style.display = 'block';
+                
+                // Scroll to emergency info
+                document.getElementById('emergency-info').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        // Initialize ScrollReveal
+        ScrollReveal().reveal('.card', { 
+            delay: 200,
+            distance: '20px',
+            origin: 'bottom',
+            interval: 100
+        });
+        
+        ScrollReveal().reveal('.feature-icon', { 
+            delay: 300,
+            distance: '20px',
+            origin: 'bottom'
+        });
+    </script>
 </body>
 </html>
